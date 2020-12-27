@@ -41,7 +41,7 @@ background(46,139,87);
 
 foodObj.display();
 
-fedTime=database.ref('FeedTime');
+fedTime=database.ref('fedTime');
 fedTime.on("value",function(data){
   lastFed=data.val();
 });
@@ -53,7 +53,7 @@ fedTime.on("value",function(data){
   fill("black");
   text("Food Remaining " + foodS,40,80);
  
-
+  // last fed time format
   fill(255,255,254);
   textSize(15);
   if(lastFed>=12) {
@@ -100,13 +100,12 @@ function addFoods() {
 
 function feedDog() {
   dogSprite.addImage(happyDog);
-    if(food !== undefined) {
-      foodObj.updateFoodStock(foodObj.getFoodStock()-1);
-      database.ref('Food').update({
-        Food:foodObj.getFoodStock(),
-        fedTime:hour() /// something is wrong with updateFoodStock fix it.
+          foodObj.updateFoodStock(foodObj.deductFood());
+      database.ref('/').update({
+        Food:foodS,
+        fedTime:hour() 
       })
-    }
+
   
 
 
